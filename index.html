@@ -1,0 +1,403 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.2">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Weekly Time Tracker&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Chart.js CDN --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Apple-Like Font --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;link href="https://fonts.googleapis.com/css?family=SF+Pro+Text&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* ------------------ Base / Apple Dark Mode Styles ------------------ */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-family: "SF Pro Text", "Helvetica Neue", Arial, sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-color: #000000; /* Deep dark background */</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #ffffff;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>min-height: 100vh;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>h1 {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 28px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-color: #1c1c1e; /* Apple-like container background */</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 4px 12px rgba(0,0,0,0.3);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 600px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>max-width: 95%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>text-align: left;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* ---------- Input Form Styles ---------- */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.input-section {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: #2c2c2e;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.input-fields {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>flex-wrap: wrap;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>gap: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.input-fields input {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-color: #3a3a3c;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #ffffff;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>box-sizing: border-box;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.input-buttons {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>flex-wrap: wrap;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>gap: 10px; /* spacing between "Add" and "Generate Chart" */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.input-buttons button {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-color: #0071e3;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 10px 16px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.input-buttons button:hover {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-color: #0a84ff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* ---------- Table Styles ---------- */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>table {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-collapse: collapse;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>thead tr {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-color: #1c1c1e;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>th, td {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>th {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tr:nth-child(even) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-color: #3a3a3c;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* Table inputs for in-place editing */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>td input {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 90%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-color: #2c2c2e;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #ffffff;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* ---------- Chart Canvas ---------- */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>canvas {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>height: auto;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/* ---------- Final Output (below chart) ---------- */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>#finalOutput {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>#finalOutput button {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-color: #0071e3;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 10px 16px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>#finalOutput button:hover {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-color: #0a84ff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;h1&gt;Weekly Time Tracker&lt;/h1&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="chart-container" id="chartContainer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Input Screen (will be hidden once chart is generated) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="input-section" id="inputScreen"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="input-fields"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;input type="text" id="activity" placeholder="Activity (e.g., Work)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;input type="number" step="0.1" id="hours" placeholder="Hours per week"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="input-buttons"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button onclick="addData()"&gt;Add&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button onclick="generateChart()"&gt;Generate Chart&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Table to preview and edit entries --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;table id="entryTable"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;th&gt;Activity&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;th&gt;Hours/Week&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;th&gt;Remove&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;tbody&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Rows will be inserted here dynamically --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/tbody&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/table&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Chart Canvas --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;canvas id="timeChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- Final Output: descending table + Start Over button --&gt;</p>
+<p class="p1">&lt;div id="finalOutput" style="display:none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;table id="finalTable"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;th&gt;Activity&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;th&gt;Hours/Week&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;tbody&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- Filled dynamically in descending order --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/tbody&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/table&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button onclick="startOver()"&gt;Start Over&lt;/button&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let entries = [];<span class="Apple-converted-space">      </span>// Each entry is { label: string, hours: number }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let myChart = null;<span class="Apple-converted-space">    </span>// Chart.js instance</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Color palette (Apple-inspired, excluding gray)</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const colors = [</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'#0a84ff', '#ff375f', '#34c759', '#ff9500',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'#af52de', '#5e5ce6', '#64d2ff', '#ff9f0a'</p>
+<p class="p1"><span class="Apple-converted-space">  </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// 1. Add data to table/array</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function addData() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const activityInput = document.getElementById('activity');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const hoursInput = document.getElementById('hours');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const activityVal = activityInput.value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const hoursVal = parseFloat(hoursInput.value);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Basic validation</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (activityVal &amp;&amp; !isNaN(hoursVal) &amp;&amp; hoursVal &gt;= 0) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// Push new entry</p>
+<p class="p1"><span class="Apple-converted-space">      </span>entries.push({ label: activityVal, hours: hoursVal });</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// Clear inputs</p>
+<p class="p1"><span class="Apple-converted-space">      </span>activityInput.value = '';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>hoursInput.value = '';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// Rebuild table</p>
+<p class="p1"><span class="Apple-converted-space">      </span>buildTable();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>alert('Please enter a valid activity and hours &gt;= 0.');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// 2. Build the input table from entries array</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function buildTable() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const tbody = document.querySelector('#entryTable tbody');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tbody.innerHTML = ''; // Clear old rows</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>entries.forEach((item, index) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const row = document.createElement('tr');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>// Activity Cell</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const activityCell = document.createElement('td');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const activityEdit = document.createElement('input');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>activityEdit.type = 'text';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>activityEdit.value = item.label;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>activityCell.appendChild(activityEdit);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>// Hours Cell</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const hoursCell = document.createElement('td');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const hoursEdit = document.createElement('input');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>hoursEdit.type = 'number';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>hoursEdit.step = '0.1';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>hoursEdit.value = item.hours;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>hoursCell.appendChild(hoursEdit);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>// Remove Button</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const removeCell = document.createElement('td');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const removeBtn = document.createElement('button');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>removeBtn.innerText = 'X';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>removeBtn.style.backgroundColor = '#ff375f';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>removeBtn.style.color = '#fff';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>removeBtn.style.padding = '4px 8px';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>removeBtn.style.borderRadius = '6px';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>removeBtn.onclick = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>entries.splice(index, 1);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>buildTable();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>};</p>
+<p class="p1"><span class="Apple-converted-space">      </span>removeCell.appendChild(removeBtn);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>row.appendChild(activityCell);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>row.appendChild(hoursCell);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>row.appendChild(removeCell);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>tbody.appendChild(row);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// 3. Generate the chart (and hide the input screen)</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function generateChart() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>autoAddLastInputIfAny();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>readTableUpdates();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Ensure we have at least 1 valid entry</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (entries.length === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>alert('Please enter at least one activity before generating a chart.');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Sort entries in descending order by hours</p>
+<p class="p1"><span class="Apple-converted-space">    </span>entries.sort((a, b) =&gt; b.hours - a.hours);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Destroy old chart if exists</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (myChart) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>myChart.destroy();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const ctx = document.getElementById('timeChart').getContext('2d');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Build arrays for Chart.js</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const labels = entries.map(e =&gt; e.label);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const data = entries.map(e =&gt; e.hours);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>myChart = new Chart(ctx, {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>type: 'pie',</p>
+<p class="p1"><span class="Apple-converted-space">      </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>labels: labels,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>data: data,</p>
+<p class="p1"><span class="Apple-converted-space">          </span>backgroundColor: colors</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>options: {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>responsive: true,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>maintainAspectRatio: true,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>legend: {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>labels: {</p>
+<p class="p1"><span class="Apple-converted-space">              </span>color: '#ffffff'</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Hide the input screen</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('inputScreen').style.display = 'none';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Build and show final output table in descending order</p>
+<p class="p1"><span class="Apple-converted-space">    </span>buildFinalTable();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('finalOutput').style.display = 'block';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// If user typed something in the Activity/Hours fields and never clicked "Add",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// include it automatically when they hit "Generate Chart."</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function autoAddLastInputIfAny() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const activityVal = document.getElementById('activity').value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const hoursVal = parseFloat(document.getElementById('hours').value);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (activityVal &amp;&amp; !isNaN(hoursVal) &amp;&amp; hoursVal &gt;= 0) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// Add that entry</p>
+<p class="p1"><span class="Apple-converted-space">      </span>entries.push({ label: activityVal, hours: hoursVal });</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// Clear inputs</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('activity').value = '';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('hours').value = '';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Read any inline edits made in the table</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function readTableUpdates() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const tbody = document.querySelector('#entryTable tbody');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const rows = Array.from(tbody.getElementsByTagName('tr'));</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>rows.forEach((row, index) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const activityVal = row.cells[0].querySelector('input').value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const hoursVal = parseFloat(row.cells[1].querySelector('input').value);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (activityVal &amp;&amp; !isNaN(hoursVal) &amp;&amp; hoursVal &gt;= 0) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Update the entries array</p>
+<p class="p1"><span class="Apple-converted-space">        </span>entries[index].label = activityVal;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>entries[index].hours = hoursVal;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// If invalid, remove from array</p>
+<p class="p1"><span class="Apple-converted-space">        </span>entries.splice(index, 1);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>buildTable(); // Rebuild to sync any possible removals</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Build the final table (descending order) below the chart</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function buildFinalTable() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const tbody = document.querySelector('#finalTable tbody');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tbody.innerHTML = '';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Entries are already sorted descending by hours</p>
+<p class="p1"><span class="Apple-converted-space">    </span>entries.forEach(item =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const row = document.createElement('tr');</p>
+<p class="p2"><span class="Apple-converted-space">      </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>const activityCell = document.createElement('td');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>activityCell.textContent = item.label;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>const hoursCell = document.createElement('td');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>hoursCell.textContent = item.hours;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>row.appendChild(activityCell);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>row.appendChild(hoursCell);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>tbody.appendChild(row);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Reset / Start Over</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function startOver() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>window.location.reload();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
